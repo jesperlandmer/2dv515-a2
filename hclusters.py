@@ -84,8 +84,3 @@ def printClust(clust, labels=None, n=0):
     # Now print the right and left branches
     if clust.left is not None: printClust(clust.left, labels=labels, n=n + 1)
     if clust.right is not None: printClust(clust.right, labels=labels, n=n + 1)
-
-
-blognames,words,data=readFile('blogdata.txt')
-clust=hcluster(data)
-printClust(clust,labels=blognames)
