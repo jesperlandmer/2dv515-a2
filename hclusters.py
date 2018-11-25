@@ -15,9 +15,6 @@ def readFile(filename):
         data.append([float(x) for x in p[1:]])
     return row_names, col_names, data
 
-
-from math import sqrt
-
 class bicluster:
     def __init__(self, vec, left=None, right=None, distance=0.0, id=None):
         self.left = left
@@ -44,8 +41,7 @@ def hcluster(rows, distance=pearson):
             for j in range(i + 1, len(clust)):
                 # Distances is the cache of distance calculations
                 if (clust[i].id, clust[j].id) not in distances:
-                    distances[(clust[i].id, clust[j].id)] = \
-                        distance(clust[i].vec, clust[j].vec)
+                    distances[(clust[i].id, clust[j].id)] = distance(clust[i].vec, clust[j].vec)
 
                 d = distances[(clust[i].id, clust[j].id)]
 
@@ -73,6 +69,7 @@ def hcluster(rows, distance=pearson):
 
 def printClust(clust, labels=None, n=0):
     # Indent to make a hierarchy layout
+    print(clust.id)
     if clust.id < 0:
         # Negative id means that this is branch
         print('-')
@@ -84,3 +81,8 @@ def printClust(clust, labels=None, n=0):
     # Now print the right and left branches
     if clust.left is not None: printClust(clust.left, labels=labels, n=n + 1)
     if clust.right is not None: printClust(clust.right, labels=labels, n=n + 1)
+
+
+blognames,words,data=readFile('blogdata.txt')
+clust=hcluster(data)
+printClust(clust,labels=blognames)
