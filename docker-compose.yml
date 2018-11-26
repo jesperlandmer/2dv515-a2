@@ -10,6 +10,9 @@ services:
             CONFIG_FILE: 'nginx.conf'
     networks:
         - clustnet
+    depends_on:
+        - rest
+        - frontend
     ports:
         - '8000:80'
 
@@ -24,10 +27,22 @@ services:
       - ./frontend/:/app/
       - server:/code/
     
+  frontend:
+    image: clust_frontend
+    restart: unless-stopped
+    build:
+      context: ./frontend/
+    networks:
+      - clustnet
+    depends_on:
+      - rest
+    volumes:
+      - ./frontend/:/app/
+      - node_modules_frontend:/app/node_modules
 
 volumes:
   server:
-  # node_modules_frontend:
+  node_modules_frontend:
 
 networks:
   clustnet:
