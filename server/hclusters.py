@@ -1,20 +1,3 @@
-def readFile(filename):
-    lines = open(filename).readlines()
-
-    # First line is the column titles
-    col_names = lines[0].strip().split('\t')[1:]
-    row_names = []
-    data = []
-    for line in lines[1:]:
-        p = line.strip().split('\t')
-
-        # First column in each row is the row name
-        row_names.append(p[0])
-
-        # The data for this row is the remainder of the row
-        data.append([float(x) for x in p[1:]])
-    return row_names, col_names, data
-
 class bicluster:
     def __init__(self, vec, left=None, right=None, distance=0.0, id=None):
         self.left = left
@@ -82,7 +65,8 @@ def printClust(clust, labels=None, n=0):
     if clust.left is not None: printClust(clust.left, labels=labels, n=n + 1)
     if clust.right is not None: printClust(clust.right, labels=labels, n=n + 1)
 
+# from filereader import readFile
 
-blognames,words,data=readFile('blogdata.txt')
-clust=hcluster(data)
-printClust(clust,labels=blognames)
+# blognames,words,data=readFile('blogdata.txt')
+# clust=hcluster(data)
+# printClust(clust,labels=blognames)

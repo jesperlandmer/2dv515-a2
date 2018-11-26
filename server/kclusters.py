@@ -1,27 +1,19 @@
-def readFile(filename):
-    lines = open(filename).readlines()
+import json
 
-    # First line is the column titles
-    col_names = lines[0].strip().split('\t')[1:]
-    row_names = []
-    data = []
-    for line in lines[1:]:
-        p = line.strip().split('\t')
+class JsonSerializable(object):
+    def toJson(self):
+        return json.dumps(self.__dict__)
 
-        # First column in each row is the row name
-        row_names.append(p[0])
+    def __repr__(self):
+        return self.toJson()
 
-        # The data for this row is the remainder of the row
-        data.append([float(x) for x in p[1:]])
-    return row_names, col_names, data
-
-class bicluster:
+class bicluster(JsonSerializable):
     def __init__(self, vec, id=None, distance=0.0):
         self.vec = vec
         self.id = id
         self.distance = distance
 
-class centroid:
+class centroid(JsonSerializable):
     def __init__(self, row):
         self.row = row
         self.blogs = []
@@ -93,7 +85,25 @@ def printClust(centroids, labels=None, n=0):
             print(labels[newlist[i].id])
             print('-')
 
+def jsonConverter(clust, labels=None):
+    if labels != None:
+        result = []
+        for i in range(len(clust)):
+            labelsInOrder = []
+            newlist = sorted(clust[i].blogs, key=lambda x: x.distance, reverse=False)
 
-blognames,words,data=readFile('blogdata.txt')
-clust=kcluster(data, K=3)
-printClust(clust, blognames)
+            for i in range(len(newlist)):
+                labelsInOrder.append({ 'name': labels[newlist[i].id], 'dist': newlist[i].distance })
+
+            result.append({ 'id': i, 'cluster': labelsInOrder})
+        
+        return result
+    else: return []
+
+
+# from filereader import readFile
+
+# blognames,words,data=readFile('blogdata.txt')
+# clust=kcluster(data, K=3)
+
+# printClust(clust, blognames)
