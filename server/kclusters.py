@@ -26,7 +26,15 @@ class centroid(JsonSerializable):
         self.blogs = []
     
     def noNewAssignments(self):
-        return len(self.blogs) == len(self.prevCluster)
+        noNewAssignments = True
+        if (len(self.blogs) != len(self.prevCluster)):
+            noNewAssignments = False
+        else:
+            for i in range(len(self.blogs)):
+                if (self.blogs[i].id != self.prevCluster[i].id):
+                    noNewAssignments = False
+
+        return noNewAssignments
                 
         
 
@@ -72,6 +80,7 @@ def kcluster(rows, distance = pearson, K = 0):
             else: done = False
 
 
+    print(count)
     return centroids
 
 def printClust(centroids, labels=None, n=0):
@@ -85,7 +94,7 @@ def printClust(centroids, labels=None, n=0):
             print(labels[newlist[i].id])
             print('-')
 
-def jsonConverter(clust, labels=None):
+def KJsonConverter(clust, labels=None):
     if labels != None:
         result = []
         for i in range(len(clust)):
