@@ -7,7 +7,6 @@ from flask_jsonpify import jsonify
 from filereader import readFile
 from kclusters import kcluster, KJsonConverter
 from hclusters import hcluster, HJsonConverter
-from dendogram import drawDendrogram
 
 app = Flask(__name__)
 api = Api(app)
