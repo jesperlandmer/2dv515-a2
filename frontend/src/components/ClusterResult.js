@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Table } from 'react-bootstrap';
+import Tree from 'react-d3-tree';
 
 const mapStateToProps = state => ({
-  clusters: state.clusters.clusters,
-  showHCluster: state.clusters.showHCluster,
+  kclusters: state.clusters.kclusters,
+  hclusters: state.clusters.hclusters,
 })
 
 class ClusterResult extends Component {
@@ -12,7 +12,7 @@ class ClusterResult extends Component {
   render() {
     return (
     <div>
-        {this.props.clusters.length > 0 && 
+        {this.props.kclusters.length > 0 && 
           this.props.clusters.map((blog, key) => 
             <div style={{ display: 'inline-block', verticalAlign:'top', fontSize: '12px', marginTop: '3vh'}}>
               {blog.cluster.map((b) =>
@@ -24,8 +24,12 @@ class ClusterResult extends Component {
             </div>
           )
         }
-        {this.props.showHCluster &&
-          <img src="/api/hcluster/tree.jpg"></img>
+        {Object.keys(this.props.hclusters).length > 0 &&
+                <div id="treeWrapper" style={{width: '50em', height: '20em'}}>
+ 
+                <Tree data={this.props.hclusters} />
+         
+              </div>
         }
     </div>
     );

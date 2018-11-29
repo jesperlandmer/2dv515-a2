@@ -80,19 +80,6 @@ class ClusterSelector extends Component {
             </div>
         }
 
-        {this.state.clustMethod === 'h-cluster' &&
-            <div>
-                <Button
-                    bsStyle="primary" 
-                    type="button"
-                    onClick={this.handleGenerate}
-                    style={{ margin: '10px' }}
-                >
-                    {this.props.loading ? 'Loading...' : 'Generate Tree'}
-                </Button>
-            </div>
-        }
-
         <Button bsStyle="primary" type="button" onClick={this.handleSubmit}>Display Result</Button>
     </form>
     );

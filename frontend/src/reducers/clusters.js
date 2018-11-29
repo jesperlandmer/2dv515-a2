@@ -1,27 +1,21 @@
-import { K_CLUSTER, H_CLUSTER, H_CLUSTER_GENERATE } from '../constants/actionTypes';
+import { K_CLUSTER, H_CLUSTER } from '../constants/actionTypes';
 
 const initialState = {
-  loading: false,
-  clusters: [],
-  showHCluster: false,
-  message: null
+  kclusters: [],
+  hclusters: {},
 }
 
 export default (state = initialState, action) => {
   switch(action.type) {
-    case `${H_CLUSTER_GENERATE}_PENDING`:
-      return { ...state, loading: true }
-    case `${H_CLUSTER_GENERATE}_REJECTED`:
-      return {...state, loading: false, message: 'Failed' }
-    case `${H_CLUSTER_GENERATE}_FULFILLED`:
-      return {...state, loading: false, message: 'Done!' }
+    case `${H_CLUSTER}_REJECTED`:
+      return {...state, kclusters: [], hclusters: {} }
+    case `${H_CLUSTER}_FULFILLED`:
+      return {...state, kclusters: [], hclusters: action.payload.data }
 
     case `${K_CLUSTER}_REJECTED`:
-      return {...state, clusters: [], showHCluster: false }
+      return {...state, kclusters: [], hclusters: [] }
     case `${K_CLUSTER}_FULFILLED`:
-      return {...state, clusters: action.payload.data, showHCluster: false }
-    case `${H_CLUSTER}`:
-      return {...state, clusters: [], showHCluster: true }
+      return {...state, kclusters: action.payload.data, hclusters: {} }
     default:
       return state;
   }

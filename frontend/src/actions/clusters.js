@@ -14,12 +14,6 @@ export function fetchKClusters(numOfClusters) {
 export function fetchHClusters() {
   return {
     type: H_CLUSTER,
-  };
-}
-
-export function postGenerateHCluster() {
-  return {
-    type: H_CLUSTER_GENERATE,
-    payload: axios.post(`${H_CLUSTER_ROOT}/generate`),
+    payload: axios.get(`${H_CLUSTER_ROOT}`),
   };
 }
