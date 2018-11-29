@@ -13,8 +13,8 @@ class ClusterResult extends Component {
     return (
     <div>
         {this.props.kclusters.length > 0 && 
-          this.props.clusters.map((blog, key) => 
-            <div style={{ display: 'inline-block', verticalAlign:'top', fontSize: '12px', marginTop: '3vh'}}>
+          this.props.kclusters.map((blog, key) => 
+            <div key={key} style={{ display: 'inline-block', verticalAlign:'top', fontSize: '12px', marginTop: '3vh'}}>
               {blog.cluster.map((b) =>
                 blog.cluster[blog.cluster.length - 1].name !== b.name ?
                   <p style={{ marginBottom: 0 }}>{b.name} <br/> -</p>
@@ -25,7 +25,7 @@ class ClusterResult extends Component {
           )
         }
         {Object.keys(this.props.hclusters).length > 0 &&
-                <div id="treeWrapper" style={{width: '50em', height: '20em'}}>
+                <div id="treeWrapper" style={{width: '100%', height: '50em'}}>
  
                 <Tree data={this.props.hclusters} />
          
