@@ -8,13 +8,12 @@ class JsonSerializable(object):
         return self.toJson()
         
 class bicluster(JsonSerializable):
-    def __init__(self, vec, left=None, right=None, id=None, parent=None, distance=0.0):
+    def __init__(self, vec, left=None, right=None, id=None, distance=0.0):
         self.left = left
         self.right = right
         self.vec = vec
         self.id = id
         self.distance = distance
-        self.parent = parent
 
 from pearson import pearson
 
@@ -67,15 +66,13 @@ def merge(clusters, distance, id):
 
     # Assuming vec-length of A is same as length of words
     for i in range(len(A.vec)):
-        wordA = A.vec[i]
-        wordB = B.vec[i]
+        countWordA = A.vec[i]
+        countWordB = B.vec[i]
 
-        merge_count = wordA + wordB / 2.0
+        merge_count = countWordA + countWordB / 2.0
         newCluster.append(merge_count)
     
     merged_clusters = bicluster(newCluster, left=A, right=B, id=id, distance=distance)
-    A.parent = merged_clusters
-    B.parent = merged_clusters
     return merged_clusters
 
 def HJsonConverter(clust, labels=None):
